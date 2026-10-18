@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create a short link and see where it takes you. A serverless learning project.">
+  <title>Small Link — URL shortener</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="wordmark" href="/" aria-label="Small Link home"><span class="mark" aria-hidden="true">↗</span> small link<span class="dot">.</span></a><span class="badge">A LITTLE LINK. A BIG IDEA.</span></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow"><span></span> LESS URL. MORE POSSIBILITY.</p>
+      <h1 id="page-title">Long story.<br><em>Short link.</em></h1>
+      <p class="lede">Make your next destination a little easier to share.<br class="desktop-break"> One link, a simple redirect, and every visit counted.</p>
+    </section>
+    <section class="workspace" aria-label="Create and manage short links">
+      <div class="create-panel">
+        <div class="panel-heading"><span class="step">01 / CREATE</span><span class="subtle">Ready when you are</span></div>
+        <form id="shorten-form">
+          <label for="url">Where are we going?</label>
+          <div class="input-row"><input id="url" name="url" type="url" placeholder="https://example.com/a-very-long-story" required maxlength="2048" autocomplete="url" aria-describedby="url-help"><button id="create-button" type="submit">Shorten link <span aria-hidden="true">↗</span></button></div>
+          <p id="url-help" class="help">Public http or https URLs only. Links expire after 30 days.</p>
+        </form>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+        <div id="result" class="result" hidden><span class="result-label">YOUR LINK IS READY</span><div class="result-row"><a id="short-link" target="_blank" rel="noopener noreferrer"></a><button id="copy-button" class="secondary" type="button">Copy link</button></div></div>
+      </div>
+      <aside class="note-panel"><span class="note-star" aria-hidden="true">✳</span><h2>Small link.<br>Clear picture.</h2><p>Share your link, then come back to see how many times it has been opened.</p><div class="note-footer">BUILT TO BE SIMPLE <span aria-hidden="true">↘</span></div></aside>
+    </section>
+    <section class="links-section" aria-labelledby="links-title">
+      <div class="section-heading"><div><p class="step">02 / KEEP TRACK</p><h2 id="links-title">Your recent links</h2></div><button id="refresh-button" class="secondary" type="button">Refresh counts</button></div>
+      <p class="help">Saved in this browser. Anyone with a link can view its statistics. Visits include repeat requests and bots.</p>
+      <div id="links-list" class="links-list"><div class="empty-state"><span aria-hidden="true">↗</span><p>Your next destination starts above.</p><small>Create a link and it will appear here.</small></div></div>
+    </section>
+    <footer><span>SMALL LINK / A SERVERLESS LEARNING PROJECT</span><span>Make something. Learn something.</span></footer>
+  </main>
+</body>
+</html>
