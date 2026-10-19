@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Local development creates **no AWS usage charges**. The server uses SQLite, and DynamoDB tests use Moto in memory. No AWS resources, IAM permissions, plan settings, or billing settings were changed.
+Local development creates **no AWS usage charges**. The server uses SQLite, and DynamoDB tests use Moto in memory. The approved cloud deployment is now live and does consume AWS usage/credits. It created the application resources, a scoped execution role, and SAM artifact storage; the Free plan and billing settings were not changed.
 
 The previous read-only connection check identified the Blank Canvas project, an active Free plan, and selected Region `us-east-2`. The architecture uses services listed as supported in the [new experience Free Tier](https://docs.aws.amazon.com/accounts/latest/reference/supported-services-sign-up-new.html#supported-services-free-tier): Lambda, API Gateway, DynamoDB, CloudWatch/Logs, IAM, CloudFormation, and S3 for eventual SAM deployment artifacts. SAM is a local infrastructure tool that generates CloudFormation resources.
 
@@ -10,7 +10,7 @@ The supported-service list establishes service compatibility, not proof that eve
 
 ## Small-demo estimate
 
-Illustrative assumption: 10,000 total API/Lambda requests in a month, averaging 100 ms at 128 MB, including frontend asset requests; approximately 1,000 link creations and 8,000 redirects; records under 1 KB for this estimate, very small stored data, and less than 0.1 GB of logs. Actual record sizes can be larger (up to the validation limit), increasing billed write units.
+Illustrative assumption: 10,000 total API/Lambda requests in a month, averaging 100 ms at 512 MB, including frontend asset requests; approximately 1,000 link creations and 8,000 redirects; records under 1 KB for this estimate, very small stored data, and less than 0.1 GB of logs. Actual record sizes can be larger (up to the validation limit), increasing billed write units. Cold starts take longer than this average assumption; observed SDK startup was about 2.8 seconds after increasing memory/CPU.
 
 Using public starting rates as a rough US-region planning example, before credits/allowances:
 
@@ -18,7 +18,7 @@ Using public starting rates as a rough US-region planning example, before credit
 | --- | --- |
 | HTTP API: 10,000 requests at about $1/million | $0.01 |
 | Lambda requests: 10,000 at $0.20/million | $0.002 |
-| Lambda duration: 125 GB-seconds at about $0.0000166667 | $0.0021 |
+| Lambda duration: 500 GB-seconds at about $0.0000166667 | $0.0083 |
 | DynamoDB: ~11,000 small writes, including two limiter writes per creation, at ~$0.625/million | $0.0069 |
 | DynamoDB statistics reads and small storage | Small additional usage |
 | Logs: under 0.1 GB ingested, at about $0.50/GB | Under $0.05, plus storage |
@@ -34,7 +34,8 @@ Sources checked during this build:
 
 ## Cost-conscious template choices
 
-- Lambda on-demand, 128 MB, 10-second timeout; no always-running servers, VPC/NAT gateway, provisioned concurrency, or custom domain.
+- Lambda on-demand, 512 MB, 15-second timeout; no always-running servers, VPC/NAT gateway, provisioned concurrency, or custom domain. The initial 128 MB / 10-second configuration timed out during SDK startup in AWS; the revised setting passed live testing.
+- SAM's private artifact bucket uses KMS encryption. S3 storage/requests and applicable KMS usage are additional small deployment costs, not included in the illustrative request subtotal above.
 - DynamoDB on-demand, no secondary indexes or streams, 30-day link expiration.
 - Seven-day retention for application and API access logs; no bodies, IPs, or destination URLs logged.
 - API default throttling target: 5 requests/second, burst 10. This is not a hard cap or budget.

@@ -28,4 +28,4 @@ Every GET redirect is a countable request, including bots, previews, retries, an
 
 API Gateway throttling is not a hard cost ceiling, and distributed abuse can still consume request capacity and credits. Someone can deliberately exhaust the shared creation quota. The Free plan and service restrictions are separate from application controls.
 
-The local development server binds only to 127.0.0.1; it is not hardened for exposure to the internet. Production HTTP parsing and TLS will be handled by API Gateway. DynamoDB access in a real AWS deployment has not been exercised in this phase.
+The local development server binds only to 127.0.0.1; it is not hardened for exposure to the internet. The deployed app uses API Gateway for HTTP parsing and TLS. Live DynamoDB create/update/read operations and CloudWatch logging passed verification on October 19, 2026. No persistent CloudTrail trail was found; event history is not a substitute for durable production audit retention.

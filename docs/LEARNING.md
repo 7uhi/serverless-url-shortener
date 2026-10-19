@@ -82,6 +82,6 @@ Statistics use strongly consistent `GetItem` reads so the count reflects a compl
 
 ## A concise demo for your application
 
-“I built a Python serverless URL shortener with a plain JavaScript frontend. I used conditional writes to handle code collisions and atomic increments for concurrent visits. I described the AWS infrastructure in SAM, scoped the Lambda role to its table and logs, and tested locally with SQLite and mocked DynamoDB. My next step is an approved deployment to Ohio, followed by observing requests and errors in CloudWatch.”
+“I built and deployed a Python serverless URL shortener with a plain JavaScript frontend. I used conditional writes to handle code collisions and atomic increments for concurrent visits. I described the AWS infrastructure in SAM, scoped the Lambda role to its table and logs, and tested locally with SQLite and mocked DynamoDB. During deployment, I used CloudWatch to diagnose startup timeouts and verified the working create/redirect/statistics flow in Ohio.”
 
-Update that statement after you personally deploy and verify the cloud version. Git is initialized locally; no GitHub repository has been created or published.
+Use wording that accurately reflects your own understanding and the assistance you received. Read the startup logs and repeat the live demo yourself so you can explain the diagnosis. Git is initialized locally; no GitHub repository has been created or published.

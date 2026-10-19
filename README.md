@@ -2,7 +2,11 @@
 
 A hands-on AWS learning project: turn a long URL into an eight-character code, redirect visitors, and track redirect requests. Built with Python 3.12 and plain HTML, CSS, and JavaScript.
 
-**Status: local development only. No AWS resources have been deployed or changed.**
+**Status: deployed and verified in AWS us-east-2 on October 19, 2026.**
+
+Live app: **https://oe8duuof0f.execute-api.us-east-2.amazonaws.com**
+
+The Free plan remains active. See [deployment details](docs/DEPLOYMENT.md) for resources, verification, the startup fix, and monitoring instructions.
 
 ## Run locally
 
@@ -123,11 +127,11 @@ Timestamps are Unix seconds. Validation errors return 400, unknown/expired links
 
 Tests cover the request lifecycle, input validation, random-code collisions, expiration, concurrent counter updates, shared creation limits, SQLite persistence, error sanitization, real HTTP requests, and the DynamoDB adapter using **Moto**. Moto intercepts AWS calls and uses dummy test credentials; it does not access your project. The HTTP test briefly binds an ephemeral localhost port.
 
-`cfn-lint` validates/transforms the SAM template locally. It does not deploy or validate your actual AWS permissions. SAM CLI 1.168.0 and CloudFormation Guard 3.2.1 are now installed, and a local SAM build has succeeded. AWS deployment is pending renewal of the expired AWS login; no cloud resources have been changed. See [verification details](docs/VERIFICATION.md).
+`cfn-lint` validates/transforms the SAM template locally. SAM CLI 1.168.0 and CloudFormation Guard 3.2.1 are installed. The local build, scoped Guard checks, 59 automated tests, and deployed HTTP smoke test passed. See [verification details](docs/VERIFICATION.md).
 
-## Safety and future deployment
+## Safety and future updates
 
-The future target is profile `student-aws`, selected Region `us-east-2`, on the active Free plan. Verify the assigned Region in **AWS Settings → View all projects → Overview → Additional Info → Region** before deployment.
+The deployed target is profile `student-aws`, selected Region `us-east-2`, on the active Free plan. Verify the assigned Region in **AWS Settings → View all projects → Overview → Additional Info → Region** before future deployments.
 
 Nothing in the run/test commands deploys infrastructure. There is deliberately no automatic deployment workflow. Explicit approval is required before deploying, creating IAM roles/policies, upgrading the plan, or deleting AWS resources.
 

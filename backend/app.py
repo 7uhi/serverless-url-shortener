@@ -155,13 +155,17 @@ _application = None
 def lambda_handler(event, context):
     global _application
     if _application is None:
+        started = time.monotonic()
+        LOG.info(json.dumps({'event': 'sdk_initialization_started'}))
         import boto3
         from botocore.config import Config
         from storage import DynamoStore
+        LOG.info(json.dumps({'event': 'sdk_imported', 'elapsed_ms': round((time.monotonic() - started) * 1000)}))
         # Do not automatically retry non-idempotent counters after ambiguous network failures.
         db = boto3.resource('dynamodb', config=Config(connect_timeout=2, read_timeout=3, retries={'total_max_attempts': 1, 'mode': 'standard'}))
         # API Gateway supplies this context; never build links from the client Host header.
         base_url = f"https://{event['requestContext']['domainName']}"
         _application = Application(DynamoStore(db.Table(os.environ['TABLE_NAME'])), base_url,
                                    allowed_hosts=tuple(h.strip().lower() for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h.strip()))
+        LOG.info(json.dumps({'event': 'sdk_initialized', 'elapsed_ms': round((time.monotonic() - started) * 1000)}))
     return _application.handle(event)

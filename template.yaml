@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Learning URL shortener. Local development complete; deployment requires explicit approval.
+Description: Learning URL shortener with public redirects, atomic visit counts, and same-origin frontend.
+Metadata:
+  AWSToolsMetrics:
+    AWSAgentToolkit: aws-cloudformation@3
+  com.aws.cloudformation.Context:
+    ref: docs/LEARNING.md
 
 Parameters:
   AllowedHosts:
@@ -84,13 +89,19 @@ Resources:
 
   AppFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: More CPU for SDK startup after measured 128 MB startup timeouts; bounded request duration.
+        must:
+          - Keep Python 3.12 and deploy in us-east-2.
+          - Reuse the scoped table and log permissions; do not broaden IAM for performance tuning.
     Properties:
       CodeUri: backend/
       Handler: app.lambda_handler
       Runtime: python3.12
       Architectures: [x86_64]
-      MemorySize: 128
-      Timeout: 10
+      MemorySize: 512
+      Timeout: 15
       Role: !GetAtt AppRole.Arn
       LoggingConfig:
         LogGroup: !Ref AppLogs

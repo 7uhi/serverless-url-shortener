@@ -1,5 +1,7 @@
 # Local verification record
 
+Current status: the approved AWS deployment and live smoke test also passed. See the final deployment section below and [DEPLOYMENT.md](DEPLOYMENT.md). Earlier sections record the local-only phases historically.
+
 - Runtime: Python 3.12.15.
 - Automated suite: **59 tests passed** using `python -m pytest -q`.
 - SAM template: **passed** offline `cfn-lint template.yaml` validation, including SAM transformation.
@@ -30,3 +32,18 @@ Reproduce the local build (does not deploy):
 ```bash
 SAM_CLI_TELEMETRY=0 PATH="$PWD/.venv/bin:$PATH" sam build --template-file template.yaml
 ```
+
+## Live deployment — October 19, 2026
+
+- Refreshed the `student-aws` login with explicit approval and reverified Blank Canvas / active Free plan / us-east-2. Credits were $100 before deployment.
+- Created the SAM managed deployment bucket and the `small-link` stack. The reviewed initial change set contained nine additions; the later startup fix modified the function/API without replacement or deletion.
+- Initial cloud requests timed out after 10 seconds at 128 MB. Raised function memory/CPU to 512 MB, timeout to 15 seconds, and added startup timing logs. All 59 tests and cfn-lint passed after the changes.
+- Final stack status: `UPDATE_COMPLETE`.
+- Live smoke test passed: HTML/CSS/JS, create (201), redirect (302), statistics (count 1), HEAD without increment, private destination rejection (400), malformed code rejection (404).
+- One smoke-test link created: `/r/bHD3hgLh`. It expires normally; no test data was deleted.
+- CloudWatch showed SDK initialization at 2,843 ms; warm redirect at 7.46 ms. Both application and API log streams were present. DynamoDB TTL was `ENABLED` on `expires_at`.
+- Live frontend also rendered in Safari over HTTPS.
+- Public access blocking was verified on all four S3 settings; artifact encryption is `aws:kms`.
+- No plan upgrade, human access change, GitHub publication, or resource deletion occurred. Application-specific IAM resources were created as approved.
+
+Not established by these checks: sustained-load behavior, comprehensive abuse resistance, unique-visitor analytics, mobile-device behavior, or a measured monthly bill. No persistent CloudTrail trail was found.
