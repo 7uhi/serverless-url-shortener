@@ -9,7 +9,7 @@ A hands-on AWS learning project: turn a long URL into an eight-character code, r
 The environment is already installed in `.venv` on this computer:
 
 ```bash
-cd ~/serverless-url-shortener
+cd ~/Developer/AWS/serverless-url-shortener
 .venv/bin/python local_server.py
 ```
 
@@ -118,12 +118,12 @@ Timestamps are Unix seconds. Validation errors return 400, unknown/expired links
 
 ```bash
 .venv/bin/python -m pytest -q
-.venv/bin/cfn-lint template.yaml
+.venv/bin/python .venv/bin/cfn-lint template.yaml
 ```
 
 Tests cover the request lifecycle, input validation, random-code collisions, expiration, concurrent counter updates, shared creation limits, SQLite persistence, error sanitization, real HTTP requests, and the DynamoDB adapter using **Moto**. Moto intercepts AWS calls and uses dummy test credentials; it does not access your project. The HTTP test briefly binds an ephemeral localhost port.
 
-`cfn-lint` validates/transforms the SAM template locally. It does not deploy or validate your actual AWS permissions. SAM CLI is not required for the local server and was not installed in this phase. Before a future deployment, install SAM CLI and run a local `sam build`; review the generated change set only after explicit approval.
+`cfn-lint` validates/transforms the SAM template locally. It does not deploy or validate your actual AWS permissions. SAM CLI 1.168.0 and CloudFormation Guard 3.2.1 are now installed, and a local SAM build has succeeded. AWS deployment is pending renewal of the expired AWS login; no cloud resources have been changed. See [verification details](docs/VERIFICATION.md).
 
 ## Safety and future deployment
 
