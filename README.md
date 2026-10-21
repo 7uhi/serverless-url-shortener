@@ -4,7 +4,7 @@ A hands-on AWS learning project: turn a long URL into an eight-character code, r
 
 **Status: deployed and verified in AWS us-east-2 on October 19, 2026.**
 
-Live app: **https://7uhi.netlify.app**
+Live app: **https://yuhirl.netlify.app/**
 
 AWS backend: **https://oe8duuof0f.execute-api.us-east-2.amazonaws.com**
 
