@@ -1,6 +1,6 @@
 # Free Netlify address
 
-Published October 20, 2026: **https://7uhi.netlify.app**. Team `7uhi` was verified on the Free plan with 300 available credits before publication. Project ID: `89e6d75f-526d-43b0-b1d7-9d78e24eb699`. Uploaded deploy: `6ad7fec6ad1615c99fbba7f6`. No AWS resources or permissions were changed.
+Published October 20, 2026: **https://yuhirl.netlify.app/**. Team `7uhi` was verified on the Free plan with 300 available credits before publication. Project ID: `89e6d75f-526d-43b0-b1d7-9d78e24eb699`. Uploaded deploy: `6ad7fec6ad1615c99fbba7f6`. No AWS resources or permissions were changed.
 
 Netlify serves `backend/static` and forwards `/api/*` and `/r/*` to the existing AWS API. The frontend builds displayed, copied, and recent links from the browser's current origin, so opening the app at its Netlify address produces links on that address. The Lambda API's JSON `short_url` still uses its AWS hostname; API clients should be aware of this distinction. No AWS deployment is needed for the browser flow.
 
