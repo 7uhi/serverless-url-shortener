@@ -2,6 +2,8 @@
 
 Application: **https://oe8duuof0f.execute-api.us-east-2.amazonaws.com**
 
+The shorter public frontend is now **https://7uhi.netlify.app**, published October 20, 2026. It proxies link operations to this AWS deployment. See [Netlify details](NETLIFY.md), including its HEAD counting behavior.
+
 Deployed October 19, 2026 to the Blank Canvas project, Region **us-east-2**, using profile **student-aws**. The Free plan was verified active with $100 credits before deployment. No upgrade was performed.
 
 ## Resources
