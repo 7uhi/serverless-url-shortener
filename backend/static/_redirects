@@ -1,0 +1,3 @@
+# Keep these as proxy rewrites (200), so POST bodies and redirect responses reach AWS.
+/api/* https://oe8duuof0f.execute-api.us-east-2.amazonaws.com/api/:splat 200
+/r/* https://oe8duuof0f.execute-api.us-east-2.amazonaws.com/r/:splat 200
